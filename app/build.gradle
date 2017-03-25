@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+def conf = rootProject.ext
+
+
+android {
+
+
+    compileSdkVersion conf.androidCompileSdkVersion
+    buildToolsVersion conf.androidBuildToolsVersion
+    defaultConfig {
+        applicationId "com.corneflex.themoviedb"
+        minSdkVersion conf.androidMinSdkVersion
+        targetSdkVersion conf.androidTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+}
+kapt {
+    generateStubs = true
+}
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.squareup', module:'javawriter'
+    })
+
+    def support = rootProject.ext.support
+    compile support.appCompat
+    compile support.constraint
+    testCompile conf.test.junit
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+
+    def inject = rootProject.ext.inject
+    compile inject.dagger
+    compile inject.daggerAndroid
+    compile inject.daggerAndroidSupport
+
+    kapt inject.daggerCompiler
+    kapt inject.daggerAndroidProcessor
+
+    def net = rootProject.ext.net
+    compile net.retrofit
+    compile net.rxAdapter
+    compile net.moshiConverter
+    compile net.moshi
+    compile net.moshiAdapters
+
+    def map = rootProject.ext.map
+    compile map.mapper
+    compile map.selma
+    kapt map.selmaProcessor
+
+    def rx = rootProject.ext.rx
+    compile rx.rxAndroid
+    compile rx.rxJava
+
+    provided 'javax.annotation:jsr250-api:1.0'
+}
+repositories {
+    mavenCentral()
+}

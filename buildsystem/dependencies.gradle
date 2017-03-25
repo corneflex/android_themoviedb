@@ -1,0 +1,69 @@
+allprojects {
+  repositories {
+    jcenter()
+  }
+}
+
+ext {
+  //Android
+  androidBuildToolsVersion = "25.0.2"
+  androidMinSdkVersion = 21
+  androidTargetSdkVersion = 25
+  androidCompileSdkVersion = 25
+
+  //Libraries
+  daggerVersion = '2.10-rc2'
+  daggerLib = 'com.google.dagger:dagger'
+  retrofitVersion = '2.2.0'
+  supportLibraryVersion = '25.2.0'
+  constraintLayoutVersion = '1.0.0'
+  junitVersion = '4.12'
+  moshiVersion = '1.4.0'
+  modelMapperVersion = '0.7.5'
+  selmaVersion = '0.15'
+
+
+  //Development
+  leakCanaryVersion = '1.3.1'
+
+  inject = [
+          dagger:               "$daggerLib:${daggerVersion}",
+          daggerCompiler:       "$daggerLib-compiler:${daggerVersion}",
+          daggerAndroid:        "$daggerLib-android:${daggerVersion}",
+          daggerAndroidSupport: "$daggerLib-android-support:${daggerVersion}",
+          daggerAndroidProcessor: "$daggerLib-android-processor:${daggerVersion}"
+  ]
+
+  net = [
+          retrofit: "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+          rxAdapter: "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
+          moshiConverter: "com.squareup.retrofit2:converter-moshi:${retrofitVersion}",
+          moshi: "com.squareup.moshi:moshi:${moshiVersion}",
+          moshiAdapters: "com.squareup.moshi:moshi-adapters:${moshiVersion}"
+  ]
+
+  map = [
+          mapper: "org.modelmapper:modelmapper:${modelMapperVersion}",
+          selma: "fr.xebia.extras:selma:${selmaVersion}",
+          selmaProcessor: "fr.xebia.extras:selma-processor:${selmaVersion}"
+  ]
+
+  rx = [
+          rxAndroid: 'io.reactivex.rxjava2:rxandroid:2.0.1',
+          rxJava: 'io.reactivex.rxjava2:rxjava:2.0.1'
+  ]
+
+
+  support = [
+          appCompat   : "com.android.support:appcompat-v7:${supportLibraryVersion}",
+          constraint: "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
+  ]
+
+  test = [
+          junit : "junit:junit:${junitVersion}"
+  ]
+
+  developmentDependencies = [
+      leakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+  ]
+}
