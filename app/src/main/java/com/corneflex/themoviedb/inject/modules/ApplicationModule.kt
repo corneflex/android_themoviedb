@@ -2,11 +2,14 @@ package com.corneflex.themoviedb.inject.modules
 
 import android.content.Context
 import com.corneflex.themoviedb.MyApplication
+import com.corneflex.themoviedb.data.cache.MovieCacheProviders
 import com.corneflex.themoviedb.data.net.MoviesService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
 import dagger.Provides
+import io.rx_cache2.internal.RxCache
+import io.victoralbertos.jolyglot.MoshiSpeaker
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -82,6 +85,24 @@ class ApplicationModule(val application: MyApplication) {
     @Singleton
     fun providesMovieDBService(retrofit: Retrofit): MoviesService {
         return retrofit.create(MoviesService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun providesSerializerRxCache():MoshiSpeaker {
+        return MoshiSpeaker()
+    }
+
+    @Provides
+    @Singleton
+    fun providesRxCache(context: Context, moshiSpeaker: MoshiSpeaker): RxCache {
+        val myCacheDir = File(context.getCacheDir(), "RxCache")
+        return  RxCache.Builder().persistence(myCacheDir, moshiSpeaker)
+    }
+
+    fun providesMovieCachecProviders(rxCache: RxCache): MovieCacheProviders {
+        return rxCache.using(MovieCacheProviders::class.java)
     }
 
 }

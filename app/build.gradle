@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-android-extensions'
 def conf = rootProject.ext
 
 
@@ -68,6 +68,8 @@ dependencies {
     def rx = rootProject.ext.rx
     compile rx.rxAndroid
     compile rx.rxJava
+    compile rx.rxCache
+    compile rx.jolyglot
 
     provided 'javax.annotation:jsr250-api:1.0'
 }

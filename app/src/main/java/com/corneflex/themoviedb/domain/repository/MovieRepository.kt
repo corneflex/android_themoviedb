@@ -4,6 +4,6 @@ import com.corneflex.themoviedb.domain.model.Movie
 import io.reactivex.Observable
 
 interface MovieRepository {
-    fun getMovie(id:String) : Observable<Movie>
+    fun getMovie(id:Int) : Observable<Movie>
     fun getPopularMovies(page:Int) : Observable<List<Movie>>
 }
