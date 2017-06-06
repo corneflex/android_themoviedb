@@ -5,6 +5,7 @@ import android.content.Context
 import com.corneflex.themoviedb.MainActivity
 import com.corneflex.themoviedb.MyApplication
 import com.corneflex.themoviedb.inject.modules.ApplicationModule
+import com.corneflex.themoviedb.inject.modules.MainActivityModule
 import dagger.Binds
 import dagger.Component
 import dagger.Module
@@ -14,13 +15,7 @@ import dagger.multibindings.IntoMap
 import javax.inject.Singleton
 
 
-@Module(subcomponents = arrayOf(MainActivitySubComponent::class))
-internal abstract class MainActivityModule {
-    @Binds
-    @IntoMap
-    @ActivityKey(MainActivity::class)
-    internal abstract fun bindYourActivityInjectorFactory(builder: MainActivitySubComponent.Builder): AndroidInjector.Factory<out Activity>
-}
+
 
 @Singleton // Constraints this component to one-per-application or unscoped bindings.
 @Component(modules = arrayOf(ApplicationModule::class, MainActivityModule::class))

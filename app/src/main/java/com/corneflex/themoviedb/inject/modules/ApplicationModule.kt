@@ -4,6 +4,7 @@ import android.content.Context
 import com.corneflex.themoviedb.MyApplication
 import com.corneflex.themoviedb.data.cache.MovieCacheProviders
 import com.corneflex.themoviedb.data.net.MoviesService
+import com.corneflex.themoviedb.data.repository.MovieDataRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
@@ -83,8 +84,15 @@ class ApplicationModule(val application: MyApplication) {
 
     @Provides
     @Singleton
-    fun providesMovieDBService(retrofit: Retrofit): MoviesService {
+    fun providesMoviesService(retrofit: Retrofit): MoviesService {
         return retrofit.create(MoviesService::class.java)
+    }
+
+
+    @Provides
+    @Singleton
+    fun providesMoviesDataRepository(service: MoviesService): MovieDataRepository {
+        return MovieDataRepository(service)
     }
 
 
